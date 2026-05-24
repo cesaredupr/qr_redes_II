@@ -576,18 +576,29 @@ localStorage.setItem(
 
 }
 
-if(!localStorage.getItem("qr_umg_visitado")){
+const ultimaVisita =
+localStorage.getItem("qr_umg_fecha");
+
+const ahora = Date.now();
+
+const unDia =
+24 * 60 * 60 * 1000;
+
+if(
+!ultimaVisita ||
+(ahora - Number(ultimaVisita)) > unDia
+){
 
 await updateDoc(
 refContador,
 {
-total:increment(1)
+total: increment(1)
 }
 );
 
 localStorage.setItem(
-"qr_umg_visitado",
-"true"
+"qr_umg_fecha",
+ahora.toString()
 );
 
 }
